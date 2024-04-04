@@ -494,8 +494,18 @@ defmodule AbsintheRelayKeysetConnection do
     Ecto.Query.order_by(query, [q], desc: field(q, ^field))
   end
 
+  defp limit_plus_one(query, %{first: count}) when is_integer(count) do
+    count = count + 1
+    Ecto.Query.limit(query, ^count)
+  end
+
   defp limit_plus_one(query, %{first: count}) do
     Ecto.Query.limit(query, ^count + 1)
+  end
+
+  defp limit_plus_one(query, %{last: count}) when is_integer(count) do
+    count = count + 1
+    Ecto.Query.limit(query, ^count)
   end
 
   defp limit_plus_one(query, %{last: count}) do
